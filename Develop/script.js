@@ -1,41 +1,46 @@
-$(document).ready(() => {
+$(document).ready(function () {
+  $(".time-block").each(function () {
+    console.log(this);
+    var id = $(this).attr("id");
+    console.log(id);
+    var savedText = localStorage.getItem(id);
+    $(this).children("textarea").val(savedText);
   });
-  
-  $("#currentDay").text(dayjs().format("dddd MMMM DD YYYY"));
 
-  function colorBlock() {
-    let timeNow = dayjs().hour();
-    $(".time-schedule").each(function () {
-      let timeSchedule = parseInt($(this).attr("id").split("hour")[1])
-      if (timeSchedule < scheduleHour) {
-        $(this).removeClass("future");
-        $(this).removeClass("present");
+  $("#currentDay").text(dayjs().format("[Today is] dddd, MMMM DD, YYYY"));
+
+  function timeHighlight() {
+    var currentTime = dayjs().hour();
+    console.log(currentTime);
+
+    $(".time-block").each(function () {
+      var blockTime = parseInt($(this).attr("id").split("hour")[1]);
+      console.log(blockTime);
+
+      if (blockTime < currentTime) {
         $(this).addClass("past");
-      }
-      else if (timeSchedule === scheduleHour) {
-        $(this).removeClass("past");
+        $(this).removeClass("present");
         $(this).removeClass("future");
+      } else if (blockTime === currentTime) {
+        $(this).removeClass("past");
         $(this).addClass("present");
-      }
-      else {
+        $(this).removeClass("future");
+      } else {
+        $(this).removeClass("past");
         $(this).removeClass("present");
         $(this).addClass("future");
       }
-    })
+    });
   }
-
-  $(function saveData() {
-    var saveBtn = $(".saveBtn");
-    saveBtn.on("click", handleSave);
-
-    function handleSave(event) {
-      event.preventDefault();
-      console.log("save clicked");
-      
-      var textInput = $(this).siblings('textarea').val();
-      var textAreaId = $(this).siblings('textarea').attr('id');
-
-    localStorage.setItem(textAreaId, JSON.stringify(textInput));
-      $('#savedevent').fadeIn(0).delay(1000).fadeOut();
-    }
+  
+  $(".saveBtn").click(function () {
+    console.log($(this));
+    var time = $(this).parent().attr("id");
+    console.log(time);
+    var text = $(this).siblings("textarea").val();
+    console.log(text);
+    localStorage.setItem(time, text);
   });
+
+  timeHighlight();
+});
