@@ -1,21 +1,11 @@
-$(document).ready(function () {
+var currentDateElement = dayjs().format("[Today is] dddd, MMMM DD, YYYY");
+
+$('#currentDay').text(currentDate);
+
+function timeTracker () {
+  const currentTime = dayjs().hour();
   $(".time-block").each(function () {
-    console.log(this);
-    var id = $(this).attr("id");
-    console.log(id);
-    var savedText = localStorage.getItem(id);
-    $(this).children("textarea").val(savedText);
-  });
-
-  $("#currentDay").text(dayjs().format("[Today is] dddd, MMMM DD, YYYY"));
-
-  function timeHighlight() {
-    var currentTime = dayjs().hour();
-    console.log(currentTime);
-
-    $(".time-block").each(function () {
-      var blockTime = parseInt($(this).attr("id").split("hour")[1]);
-      console.log(blockTime);
+    var blockTime = parseInt($$(this).attr("id").split("hour")[1]);
 
       if (blockTime < currentTime) {
         $(this).addClass("past");
@@ -32,15 +22,14 @@ $(document).ready(function () {
       }
     });
   }
-  
-  $(".saveBtn").click(function () {
-    console.log($(this));
-    var time = $(this).parent().attr("id");
-    console.log(time);
-    var text = $(this).siblings("textarea").val();
-    console.log(text);
-    localStorage.setItem(time, text);
-  });
 
-  timeHighlight();
+
+  
+$(function () {
+  $(".saveBtn").on(click, function () {
+    var hour = $(this).parent().attr("id");
+    var text = $(this).siblings(".text").val();
+  });
+  localStorage.removeItem(hour, text);
+  });
 });
