@@ -1,11 +1,11 @@
 var currentDateElement = dayjs().format("[Today's date is] dddd, MMMM DD, YYYY, h:mm a");
 
-$("#currentDay").text(currentDate);
+$("#currentDay").text(currentDay);
 
 function timeTracker () {
   const currentTime = dayjs().hour();
   $(".time-block").each(function () {
-    var blockTime = parseInt($$(this).attr("id").split("hour")[1]);
+    var blockTime = parseInt($(this).attr("id").split("hour")[1]);
     
     if (blockTime < currentTime) {
       $(this).addClass("past");
@@ -25,9 +25,9 @@ function timeTracker () {
 
 $(function () {
   $(".saveBtn").on("click", function () {
-    var time = $(this).parent().attr("id");
-    var description = $(this).siblings("description").val();
-    localStorage.setItem(time, description);
+    var hour = $(this).parent().attr("id");
+    var description = $(this).siblings(".description").val();
+    localStorage.setItem(hour, description);
   });
 
   $("#hour9 .description").val(localStorage.getItem("hour9"));
@@ -45,9 +45,9 @@ $(function () {
 });
 
 $(function () {
-  $(".saveBtn").on(click, function () {
-    var time = $(this).parent().attr("id");
+  $(".saveBtn").on("doubleClick", function () {
+    var hour = $(this).parent().attr("id");
     var description = $(this).siblings(".description").val();
-    localStorage.removeItem(time, description);
+    localStorage.removeItem(hour, description);
   });
 });
