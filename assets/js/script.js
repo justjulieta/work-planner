@@ -3,12 +3,12 @@ var today = dayjs()
 var timeBlock = doucment.querySelector(".container");
 
 $(function () {
-  $("#currentDateElement").text(today.format(" dddd, MMMM DD, YYYY, h:mm a"));
+  $("#currentDate").text(today.format(" dddd, MMMM DD, YYYY, h:mm a"));
   console.log(currentDate);
 
-  $(".saveBtn").on("click", function () {
-    var time = $(this).parent().attr("id");
+  $(".saveBtn").on("click", function () {  
     var text = $(this).siblings(".description").val();
+    var time = $(this).parent().attr("id");
     localStorage.setItem(time, text);
   });
 
